@@ -1,0 +1,31 @@
+<project name="exemplo para build no jenkins">
+<path id="tests.classpath" path=".">
+<fileset dir="lib/">
+<include name="*.jar" />
+</fileset>
+<pathelement path="target/classes/" />
+</path>
+
+<target name="compile">
+<mkdir dir="target/classes/"/>
+<mkdir dir="target/classes-test/"/>
+<javac destdir="target/classes/" srcdir="src/" debug="true" encoding="UTF-8" includeantruntime="false" />
+<javac destdir="target/classes-test/" srcdir="test/" classpathref="tests.classpath" debug="true" encoding="UTF-8" includeantruntime="false" />
+</target>
+
+<target name="test" depends="compile">
+<junit fork="yes" forkmode="once" printsummary="true" showoutput="true" failureproperty="failed-test" haltonfailure="true" >
+<formatter type="plain" usefile="false" />
+<classpath location="target/classes-test/" />
+<classpath refid="tests.classpath" />
+<batchtest fork="yes" todir="${artifacts.dir}/reports">
+<fileset dir="target/classes-test/" >
+<include name="**/*Test.class" />
+</fileset>
+</batchtest>
+</junit>
+</target>
+<target name="jar" depends="test">
+<jar destfile="target/jenkins-exemplo.jar" basedir="target/classes/" />
+</target>
+</project>
