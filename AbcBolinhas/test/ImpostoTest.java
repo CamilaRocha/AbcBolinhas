@@ -44,7 +44,7 @@ public class ImpostoTest {
         Orcamento orcamento = new Orcamento(100.0);
         Imposto imposto = new Imposto();
         // valor esperado, valor obtido
-        assertEquals(10.0, imposto.calcula(orcamento), Double.MIN_VALUE);
+        assertEquals(8.0, imposto.calcula(orcamento), Double.MIN_VALUE);
     }
     
 }
